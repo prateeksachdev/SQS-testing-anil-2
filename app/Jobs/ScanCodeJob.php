@@ -43,7 +43,12 @@ class ScanCodeJob implements ShouldQueue
                 $vault_scan_value = '';
                 
                 $vault_response = '';
-                $vault_scan_value =  UserStatus::getVaultAPIResponse($sCode);
+                if($this->details['id'] % 2 == 0){
+                    $number= 1; 
+                }else {
+                    $number ='';
+                }
+                $vault_scan_value =  UserStatus::getVaultAPIResponse($sCode,'',$number);
 
                 if (!empty($vault_scan_value) && count($vault_scan_value) > 0) {
                     $checkFiterKeys = UserStatus::checkFilterKeys($vault_scan_value);
@@ -83,6 +88,7 @@ class ScanCodeJob implements ShouldQueue
                     }
                 } else {
                     $vault_response = 'Error 5 - Vault curently not responding';
+                    dispatch(new ScanCodeJob(['scan_code'=>$sCode]));       
                 }
 
                 $scan_code = $sCode;

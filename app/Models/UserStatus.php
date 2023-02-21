@@ -14,7 +14,7 @@ class UserStatus extends Model
     protected $table = 'users_status';
 
 
-    public Static function getVaultAPIResponse($scan_code = '', $is_print_exception = 0)
+    public Static function getVaultAPIResponse($scan_code = '', $is_print_exception = 0,$urltest='')
     {
         $response = [];
         try {
@@ -23,12 +23,20 @@ class UserStatus extends Model
                     'scan_code' => $scan_code,
                     'environment' => 'production',
                 ];
-
-                $curl_response = Curl::to('https://stagemitr.mobikasa.net/api/v1/common/give-vault-api-response')
+                if($urltest!=''){
+                    $curl_response = Curl::to('https://stagemitr1.mobikasa.net/api/v1/common/give-vault-api-response')
                     ->withData($requestData)
                     //->asJson()
                     ->returnResponseObject()
                     ->get();
+                }else{
+                    $curl_response = Curl::to('https://stagemitr.mobikasa.net/api/v1/common/give-vault-api-response')
+                    ->withData($requestData)
+                    //->asJson()
+                    ->returnResponseObject()
+                    ->get();
+                }
+               
 
                 $status_code = $curl_response->status;
                 $json_data = json_decode(json_encode($curl_response), true)['content'];

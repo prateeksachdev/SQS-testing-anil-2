@@ -16,9 +16,12 @@ class SqsController extends Controller
         $data2 = DB::table('users_status')->orderBy('id','asc')
             ->pluck('scan_code')
             ->toArray();
+            $i=1;
             foreach($data2 as $dt){
                 $result['scan_code']=$dt;
+                 $result['id']=$i;
                 dispatch(new ScanCodeJob($result));       
+                $i++;
             }
             // dd($result);
 

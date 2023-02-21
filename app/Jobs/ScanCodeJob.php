@@ -15,6 +15,7 @@ class ScanCodeJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $details;
+    public $tries = 1;
     /**
      * Create a new job instance.
      *

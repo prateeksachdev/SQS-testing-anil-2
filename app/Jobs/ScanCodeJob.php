@@ -85,7 +85,7 @@ class ScanCodeJob implements ShouldQueue
                     }
                 } else {
                     $vault_response = 'Error 5 - Vault curently not responding';
-                    dispatch(new ScanCodeJob(['scan_code'=>$sCode]));       
+                    // dispatch(new ScanCodeJob(['scan_code'=>$sCode]));       
                 }
 
                 $scan_code = $sCode;

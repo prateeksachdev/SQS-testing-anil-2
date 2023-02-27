@@ -22,7 +22,7 @@ class CreateUsersStatusSeeder extends Seeder
       
       $uId=1;
       for($i=1;$i<=1000;$i++){
-        if(($i % 50)== 0){
+        if(($i % 10)== 0){
           $uId= $uId+1;
         }
         $users[$i]['user_id']=$uId;

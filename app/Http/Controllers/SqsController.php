@@ -13,7 +13,7 @@ class SqsController extends Controller
         $result=[];
     //    for($i=0;$i<=100;$i+=50){
        DB::enableQueryLog();
-        $data2 = DB::table('users_status')->groupBy('user_id')->pluck('user_id')->toArray();
+        $data2 = DB::table('users_status')->groupBy('user_id')->pluck('user_id')->limit(5)->toArray();
             // ->pluck('scan_code')
             
             // dd(DB::getQueryLog($data2));

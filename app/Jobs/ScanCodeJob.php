@@ -37,9 +37,6 @@ class ScanCodeJob implements ShouldQueue
         // $startTime = now();
         DB::table('users_status')->where('scan_code', $sCode)->update(['process_start_at'=>now()]);
         
-        // if (is_array($data['scan_code'])) {
-        //     foreach ($data['scan_code'] as $sCode) {
-                // $result = [];
                 $vault_scan_value = '';
                 
                 $vault_response = '';
@@ -95,22 +92,7 @@ class ScanCodeJob implements ShouldQueue
                 $vault_response1 = $vault_response.$sCode;
                 $json_response = $vault_scan_value;
                 $userUpdate =  DB::table('users_status')->where('scan_code',$sCode)->update(['status'=>'1','updated_at'=>now(),'vault_response'=>$vault_response1,'json_response'=>$json_response]);
-            // }
-        // }
-
-        // $scan_code = $this->details['scan_code'];
-        // $vault_response = $this->details['vault_response'];
-        // $json_response = $this->details['json_response'];
-        // $email = new SendSqsMail();
-        // Mail::to($this->details['email'])->send($email);
-        // DB::enableQueryLog();
-        // for($i=1; $i<=1000;$i++){
-
-        // $userUpdate =  DB::table('users_status')->where('scan_code',$scan_code)->update(['status'=>'1','updated_at'=>now()]);
-        // $userUpdate =  DB::table('users_status')->where('scan_code',$scan_code)->update(['status'=>'1','updated_at'=>now(),'vault_response'=>$vault_response,'json_response'=>$json_response]);
-
-        // }
-        // \Log::warning(dd(DB::getQueryLog($userUpdate)));
+           
     }
 
 }

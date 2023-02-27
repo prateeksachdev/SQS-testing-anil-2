@@ -23,14 +23,7 @@ class SqsController extends Controller
                 dispatch(new ScanCodeJob($result));       
                 $i++;
             }
-            // dd($result);
 
-        // dispatch(new TestSqsEmailJob($result));
-        // dispatch(new PrcoessedCodesJob($result))->onQueue('processed');
-        // dispatch(new TestSqsEmailJob($result))->onQueue('response');
-    //    }
-    //    dd($result);
-      
         return view('welcome');
                 
     }

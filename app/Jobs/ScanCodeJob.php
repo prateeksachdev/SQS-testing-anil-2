@@ -33,19 +33,28 @@ class ScanCodeJob implements ShouldQueue
      */
     public function handle()
     {
-        $sCode = $this->details['scan_code'];
+
+        
+        $UIds = $this->details['user_id'];
+
+        DB::table('users_status')->where('user_id', $UIds)->update(['process_start_at'=>now()]);
+
+        $codes = DB::table('users_status')->where('user_id',$UIds)->pluck('scan_code')->toArray();
+        foreach($codes as $sCode){
+
+     
         // $startTime = now();
-        DB::table('users_status')->where('scan_code', $sCode)->update(['process_start_at'=>now()]);
+      
         
                 $vault_scan_value = '';
                 
                 $vault_response = '';
-                if($this->details['id'] % 2 == 0){
-                    $number= 1; 
-                }else {
-                    $number ='';
-                }
-                $vault_scan_value =  UserStatus::getVaultAPIResponse($sCode,'',$number);
+                // if($this->details['id'] % 2 == 0){
+                //     $number= 1; 
+                // }else {
+                //     $number ='';
+                // }
+                $vault_scan_value =  UserStatus::getVaultAPIResponse($sCode,'');
 
                 if (!empty($vault_scan_value) && count($vault_scan_value) > 0) {
                     $checkFiterKeys = UserStatus::checkFilterKeys($vault_scan_value);
@@ -92,7 +101,7 @@ class ScanCodeJob implements ShouldQueue
                 $vault_response1 = $vault_response.$sCode;
                 $json_response = $vault_scan_value;
                 $userUpdate =  DB::table('users_status')->where('scan_code',$sCode)->update(['status'=>'1','updated_at'=>now(),'vault_response'=>$vault_response1,'json_response'=>$json_response]);
-           
+            } 
     }
 
 }

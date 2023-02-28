@@ -20,3 +20,5 @@ Route::get('/', function () {
 
 
 Route::get('sqs', [SqsController::class, 'scanCode']);
+
+Route::get('batch', [SqsController::class, 'batch']);

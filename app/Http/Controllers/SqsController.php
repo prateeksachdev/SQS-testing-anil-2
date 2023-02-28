@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Bus\Batch;
 class SqsController extends Controller
 {
+    public function batch() {
+        $batchId = request('id');
+
+       return  Bus::findBatch($batchId);
+    }
     public function scanCode()
     {
         $result = [];

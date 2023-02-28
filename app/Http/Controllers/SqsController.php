@@ -66,7 +66,7 @@ class SqsController extends Controller
         // dd($data2);
 
         $i = 1;
-        foreach ($data2 as $k => $dt) {
+        foreach ($data2 as $dt) {
             $result['scan_code'] = $dt;
             //  $result['id']=$i;
             // dd($result);
@@ -81,7 +81,7 @@ class SqsController extends Controller
 
             $i++;
         }
-        // dd($result,$k);
+        dd($result);
         // dd($batch);
 
         return view('welcome');

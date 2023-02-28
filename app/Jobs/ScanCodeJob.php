@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\UserStatus;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class ScanCodeJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $details;
+    use Batchable,Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $details;
     public $tries = 1;
     /**
      * Create a new job instance.

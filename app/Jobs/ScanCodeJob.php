@@ -37,11 +37,14 @@ class ScanCodeJob implements ShouldQueue
     {
 
         
-        $UIds = $this->details['user_id'];
+        // $UIds = $this->details['user_id'];
+        $UIds = $this->details['scan_code'];
 
-        DB::table('users_status')->where('user_id', $UIds)->update(['process_start_at'=>now()]);
+        // DB::table('users_status')->where('user_id', $UIds)->update(['process_start_at'=>now()]);
 
-        $codes = DB::table('users_status')->where('user_id',$UIds)->pluck('scan_code')->toArray();
+        // $codes = DB::table('users_status')->where('user_id',$UIds)->pluck('scan_code')->toArray();
+
+        $codes = DB::table('users_status')->where('scan_id',$UIds)->pluck('scan_code')->toArray();
         foreach($codes as $sCode){
 
      

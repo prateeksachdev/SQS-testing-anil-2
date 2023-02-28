@@ -81,7 +81,7 @@ class SqsController extends Controller
 
             $i++;
         }
-        dd($result);
+        // dd($result);
         // dd($batch);
 
         return view('welcome');

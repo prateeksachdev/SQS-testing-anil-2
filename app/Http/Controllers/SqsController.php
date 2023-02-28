@@ -30,9 +30,12 @@ class SqsController extends Controller
             // dd($result);
             // dispatch(new ScanCodeJob($result));
 
-            $batch = Bus::batch([new ScanCodeJob($result)])
-                ->allowFailures()
-                ->dispatch();
+            $batch = Bus::batch([])->allowFailures()->dispatch();   
+            $codes = DB::table('users_status')->where('user_id',$dt)->pluck('scan_code')->toArray();
+            foreach($codes as $sCode){
+
+                $batch->add(new ScanCodeJob($result,$k));
+            }
             // $batch->add(new ScanCodeJob($result,$k));
 
             $i++;

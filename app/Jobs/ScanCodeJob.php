@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class ScanCodeJob implements ShouldQueue
 {
-    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable,Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $details;
     public $tries = 1;
     // public $timeout = 300;
@@ -35,29 +35,30 @@ class ScanCodeJob implements ShouldQueue
      */
     public function handle()
     {
+
+        
         // $UIds = $this->details['user_id'];
         // $UIds = $this->details['scan_code'];
 
         // DB::table('users_status')->where('user_id', $UIds)->update(['process_start_at'=>now()]);
 
         // $codes = DB::table('users_status')->where('user_id',$UIds)->pluck('scan_code')->toArray();
-        // $codes = DB::table('users_status')
-        //     ->where('scan_code', $this->details)
-        //     ->select('scan_code')->first();
-        //     // dd($codes);
-        // if (!empty($codes)) {
-        //     foreach ($codes as $sCode) {
-                // $startTime = now();
+        $codes = DB::table('users_status')->where('scan_code',$this->details['scan_code'])->pluck('scan_code')->toArray();
+        foreach($codes as $sCode){
 
+     
+        // $startTime = now();
+      
+        
                 $vault_scan_value = '';
-
+                
                 $vault_response = '';
                 // if($this->details['id'] % 2 == 0){
-                //     $number= 1;
+                //     $number= 1; 
                 // }else {
                 //     $number ='';
                 // }
-                $vault_scan_value = UserStatus::getVaultAPIResponse($this->details);
+                $vault_scan_value =  UserStatus::getVaultAPIResponse($sCode,'');
 
                 if (!empty($vault_scan_value) && count($vault_scan_value) > 0) {
                     $checkFiterKeys = UserStatus::checkFilterKeys($vault_scan_value);
@@ -97,16 +98,14 @@ class ScanCodeJob implements ShouldQueue
                     }
                 } else {
                     $vault_response = 'Error 5 - Vault curently not responding';
-                    // dispatch(new ScanCodeJob(['scan_code'=>$sCode]));
+                    // dispatch(new ScanCodeJob(['scan_code'=>$sCode]));       
                 }
 
-                $scan_code = $this->details;
-                $vault_response1 = $vault_response . $this->details;
+                $scan_code = $this->details['scan_code'];
+                $vault_response1 = $vault_response.$this->details['scan_code'];
                 $json_response = $vault_scan_value;
-                $userUpdate = DB::table('users_status')
-                    ->where('scan_code',$this->details)
-                    ->update(['status' => '1', 'updated_at' => now(), 'vault_response' => $vault_response1, 'json_response' => $json_response]);
-            }
-        // }
-    // }
+                $userUpdate =  DB::table('users_status')->where('scan_code',$this->details['scan_code'])->update(['status'=>'1','updated_at'=>now(),'vault_response'=>$vault_response1,'json_response'=>$json_response]);
+            } 
+    }
+
 }

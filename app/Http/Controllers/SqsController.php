@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ScanCodeJob;
-use App\Models\UserStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +53,6 @@ class SqsController extends Controller
 
     public function scanCode()
     {
-
         $result = [];
         //    for($i=0;$i<=100;$i+=50){
         //    DB::enableQueryLog();
@@ -69,7 +67,7 @@ class SqsController extends Controller
 
         $i = 1;
         foreach ($data2 as $dt) {
-            $result = $dt;
+            $result['scan_code'] = $dt;
             //  $result['id']=$i;
             // dd($result);
             dispatch(new ScanCodeJob($result));

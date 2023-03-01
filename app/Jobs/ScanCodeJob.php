@@ -38,7 +38,7 @@ class ScanCodeJob implements ShouldQueue
 
         
         // $UIds = $this->details['user_id'];
-        $UIds = $this->details['scan_code'];
+        // $UIds = $this->details['scan_code'];
 
         // DB::table('users_status')->where('user_id', $UIds)->update(['process_start_at'=>now()]);
 

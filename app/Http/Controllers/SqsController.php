@@ -67,7 +67,7 @@ class SqsController extends Controller
 
         $i = 1;
         foreach ($data2 as $dt) {
-            $result['scan_code'] = $dt;
+            $result = $dt;
             //  $result['id']=$i;
             // dd($result);
             dispatch(new ScanCodeJob($result));

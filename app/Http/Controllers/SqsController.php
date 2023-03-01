@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ScanCodeBatchJob;
 use App\Jobs\ScanCodeJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
@@ -39,7 +40,7 @@ class SqsController extends Controller
             $codes = DB::table('users_status')->where('user_id',$dt)->pluck('scan_code')->toArray();
             foreach($codes as $sCode){
 
-                $batch->add(new ScanCodeJob($result,$k));
+                $batch->add(new ScanCodeBatchJob($result));
             }
             // $batch->add(new ScanCodeJob($result,$k));
 

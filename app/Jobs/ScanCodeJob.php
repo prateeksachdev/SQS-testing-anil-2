@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class ScanCodeJob implements ShouldQueue
 {
     use Batchable,Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $details;
+    protected $details;
     public $tries = 1;
     // public $timeout = 300;
     /**

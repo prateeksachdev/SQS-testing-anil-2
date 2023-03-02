@@ -25,6 +25,8 @@ Route::get('batch', [SqsController::class, 'batch']);
 
 Route::get('sqs-batch', [SqsController::class, 'scanCodeBatch']);
 
+Route::get('sqs-batch2', [SqsController::class, 'scanCodeBatch2']);
+
 Route::prefix('jobs')->group(function () {
     Route::queueMonitor();
 });

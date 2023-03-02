@@ -39,12 +39,12 @@ class ScanCodeBatchJob implements ShouldQueue
         // $UIds = $this->details['user_id'];
         // $UIds = $this->details['scan_code'];
 
-        DB::table('users_status')->where('user_id', $this->details['user_id'])->update(['process_start_at'=>now()]);
+
 
         // $codes = DB::table('users_status')->where('user_id',$UIds)->pluck('scan_code')->toArray();
         $codes = DB::table('users_status')->where('user_id',$this->details['user_id'])->pluck('scan_code')->toArray();
         foreach($codes as $sCode){
-
+            DB::table('users_status')->where('scan_code', $sCode)->update(['process_start_at'=>now()]);
      
         // $startTime = now();
       

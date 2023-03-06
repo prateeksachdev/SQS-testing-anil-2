@@ -39,16 +39,16 @@ class SqsController extends Controller
 
             $batch = Bus::batch([])->allowFailures()->dispatch();   
             $codes = DB::table('users_status')->where('user_id',$dt)->pluck('scan_code')->toArray();
-            foreach($codes as $sCode){
+            // foreach($codes as $sCode){
 
-                $batch->add(new ScanCodeBatchJob($result));
-            }
+            //     $batch->add(new ScanCodeBatchJob($result));
+            // }
             // $batch->add(new ScanCodeJob($result,$k));
 
             $i++;
         }
         // dd($result,$k);
-        // dd($batch);
+        dd($batch);
 
         return view('welcome');
     }
@@ -122,7 +122,7 @@ class SqsController extends Controller
             $i++;
         }
         // dd($result,$k);
-        // dd($batch);
+        dd($batch);
 
         return view('welcome');
     }

@@ -48,7 +48,7 @@ class SqsController extends Controller
             $i++;
         }
         // dd($result,$k);
-        dd($batch);
+        // dd($batch);
 
         return view('welcome');
     }
@@ -122,7 +122,7 @@ class SqsController extends Controller
             $i++;
         }
         // dd($result,$k);
-        dd($batch);
+        // dd($batch);
 
         return view('welcome');
     }

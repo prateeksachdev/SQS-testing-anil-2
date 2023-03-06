@@ -41,7 +41,7 @@ class SqsController extends Controller
             $codes = DB::table('users_status')->where('user_id',$dt)->pluck('scan_code')->toArray();
             // foreach($codes as $sCode){
 
-            //     $batch->add(new ScanCodeBatchJob($result));
+                $batch->add(new ScanCodeBatchJob($result));
             // }
             // $batch->add(new ScanCodeJob($result,$k));
 

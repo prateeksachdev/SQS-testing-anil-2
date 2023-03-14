@@ -17,6 +17,9 @@ class ScanCodeBatchJob implements ShouldQueue
 {
     use Batchable,Dispatchable, InteractsWithQueue, Queueable, SerializesModels,IsMonitored;
     public $details;
+    public $tries = 1;
+    public $timeout = 300;
+    public $failOnTimeout = false;
 
     /**
      * Create a new job instance.

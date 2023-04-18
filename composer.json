@@ -16,7 +16,8 @@
         "ixudra/curl": "^6.21",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "romanzipp/laravel-queue-monitor": "^2.3"
+        "romanzipp/laravel-queue-monitor": "^2.3",
+        "shiftonelabs/laravel-sqs-fifo-queue": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

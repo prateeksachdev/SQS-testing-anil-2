@@ -67,6 +67,20 @@ return [
             'block_for' => null,
         ],
 
+        'sqs-fifo' => [
+            'driver' => 'sqs-fifo',
+            'key' => env('SQS_KEY'),
+            'secret' => env('SQS_SECRET'),
+            'prefix' => env('SQS_PREFIX'),
+            'suffix' => env('SQS_SUFFIX'),
+            'queue' => env('SQS_QUEUE'),    // ex: queuename.fifo
+            
+            'region' => env('AWS_DEFAULT_REGION'),  // ex: us-east-2
+            'group' => 'default',
+            'deduplicator' => 'unique',
+            'allow_delay' => env('SQS_ALLOW_DELAY'),
+        ],
+
     ],
 
     /*

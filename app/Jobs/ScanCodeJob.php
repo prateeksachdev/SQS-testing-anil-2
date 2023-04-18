@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\UpdateRecordEvent;
 use App\Models\UserStatus;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -12,12 +13,13 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use romanzipp\QueueMonitor\Traits\IsMonitored;
+use ShiftOneLabs\LaravelSqsFifoQueue\Bus\SqsFifoQueueable;
 
 
 class ScanCodeJob implements ShouldQueue
 {
     use Batchable,Dispatchable, InteractsWithQueue, Queueable, SerializesModels,IsMonitored;
-    public $details;
+    protected $details;
     public $tries = 1;
     // public $timeout = 300;
     /**
@@ -43,7 +45,7 @@ class ScanCodeJob implements ShouldQueue
         // $UIds = $this->details['scan_code'];
 
         DB::table('users_status')->where('scan_code', $this->details['scan_code'])->update(['process_start_at'=>now()]);
-
+        // dispatch(new ScanCodeJob($this->details['scan_code']));
         // $codes = DB::table('users_status')->where('user_id',$UIds)->pluck('scan_code')->toArray();
         // $codes = DB::table('users_status')->where('scan_code',$this->details['scan_code'])->pluck('scan_code')->toArray();
         // foreach($codes as $sCode){
@@ -98,6 +100,7 @@ class ScanCodeJob implements ShouldQueue
                             }
                         }
                     }
+                    event(UpdateRecordEvent::class);
                 } else {
                     $vault_response = 'Error 5 - Vault curently not responding';
                     // dispatch(new ScanCodeJob(['scan_code'=>$this->details['scan_code']]));       

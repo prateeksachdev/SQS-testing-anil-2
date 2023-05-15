@@ -41,7 +41,7 @@ class ScanCodeCustomLogicJob implements ShouldQueue
         sleep(3);
         $checkStatus = DB::table('users_status')->where('scan_code', $this->details['scan_code'])->first();
         if($checkStatus->status==0){
-            throw new Exception();
+            // throw new Exception();
         }else {
             DB::table('users_status')->where('scan_code', $this->details['scan_code'])->update(['logic'=>$checkStatus->status.'-'.$this->details['scan_code'].now()]);
         }

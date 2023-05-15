@@ -43,6 +43,8 @@ class SqsController extends Controller
             foreach($codes as $sCode){
 
                 $batch->add(new ScanCodeBatchJob($result));
+                $batch->add(new ScanCodeCustomLogicJob(['scan_code'=>$sCode]));
+                
             }
             // $batch->add(new ScanCodeJob($result,$k));
 
@@ -63,7 +65,7 @@ class SqsController extends Controller
         $data2 = DB::table('users_status')
             // ->groupBy('user_id')
             ->pluck('scan_code')
-            ->take(50)
+            ->take(10)
             ->toArray();
         // ->pluck('scan_code')
 
@@ -81,10 +83,13 @@ class SqsController extends Controller
             //     new ScanCodeCustomLogicJob($result)
             //     ])->dispatch();
             // dispatch(new ScanCodeJob($result));
-           
-            $batch = Bus::batch([])->allowFailures()->dispatch();   
-            $batch->add(new ScanCodeJob($result));
-            $batch->add(new ScanCodeCustomLogicJob($result));
+            $batch = Bus::batch([
+                new ScanCodeJob($result),
+                new ScanCodeCustomLogicJob($result)
+                ])->allowFailures()->dispatch();   
+            // $batch = Bus::batch([])->allowFailures()->dispatch();   
+            // $batch->add(new ScanCodeJob($result));
+            // $batch->add(new ScanCodeCustomLogicJob($result));
             // $codes = DB::table('users_status')->where('user_id',$dt)->pluck('scan_code')->toArray();
             // foreach($codes as $sCode){
 

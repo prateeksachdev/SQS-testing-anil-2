@@ -20,6 +20,7 @@ class CreateUsersStatusTable extends Migration
             $table->string('scan_code')->default('');
             $table->string('vault_response')->default('');
             $table->longText('json_response')->nullable();
+            $table->string('logic')->default('');
             $table->timestamp('process_start_at')->nullable();
             $table->timestamps();
         });
